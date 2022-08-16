@@ -32,8 +32,26 @@ public class BinBaum {
     }
 
     public void einfuegen(int data) {
-        Knoten<>
-    }
+        Knoten<> newKnoten = new Knoten(data);
+        Knoten<> runter = wurzel;
+        
+        while (true) {
+            // Sind die Daten größer als runner.data? 
+            // Fehler, weil Datentyp "T" kein ">" kann! 
+            if (runner.data > data) {
+                 if(runner.rechts == null){
+                     runner.rechts = newKnoten;
+                 } else {
+                     runner = runner.rechts;
+                 }
+            }
+            if (runner.data < data){
+                if (runner.links == null) runner.links = newKnoten;
+                else runner = runner.links;
+            }
+        }
+        
+        }
 
     public static void main(String[] args) {
         new BinBaum();
