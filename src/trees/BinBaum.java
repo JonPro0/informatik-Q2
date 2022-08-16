@@ -27,26 +27,32 @@ public class BinBaum {
         Knoten t2 = new Knoten<>(8, t1, null);
         wurzel2 = new Knoten<>(5, t2, new Knoten<>(3));
 
-        System.out.println(wurzel2.gibAus());
+        System.out.println(wurzel.gibAus());
+        einfuegen(23);
+        System.out.println(wurzel.gibAus());
 
     }
 
     public void einfuegen(int data) {
-        Knoten<> newKnoten = new Knoten(data);
-        Knoten<> runter = wurzel;
+        Knoten<Integer> newKnoten = new Knoten<>(data);
+        Knoten<Integer> runner = wurzel;
         
         while (true) {
             // Sind die Daten größer als runner.data? 
             // Fehler, weil Datentyp "T" kein ">" kann! 
-            if (runner.data > data) {
+            if (runner.data < data) {
                  if(runner.rechts == null){
                      runner.rechts = newKnoten;
+                     break;
                  } else {
                      runner = runner.rechts;
                  }
             }
-            if (runner.data < data){
-                if (runner.links == null) runner.links = newKnoten;
+            if (runner.data > data){
+                if (runner.links == null) {
+                    runner.links = newKnoten;
+                    break;
+                }
                 else runner = runner.links;
             }
         }
