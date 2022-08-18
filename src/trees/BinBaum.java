@@ -30,20 +30,22 @@ public class BinBaum {
         System.out.println(wurzel.gibAus());
         einfuegen(23);
         System.out.println(wurzel.gibAus());
+        System.out.println(search(3, wurzel));
 
     }
 
     public void einfuegen(int data) {
         Knoten<Integer> newKnoten = new Knoten<>(data);
         Knoten<Integer> runner = wurzel;
+        boolean toInsert = true;
         
-        while (true) {
+        while (toInsert) {
             // Sind die Daten größer als runner.data? 
             // Fehler, weil Datentyp "T" kein ">" kann! 
             if (runner.data < data) {
                  if(runner.rechts == null){
                      runner.rechts = newKnoten;
-                     break;
+                     toInsert = false;
                  } else {
                      runner = runner.rechts;
                  }
@@ -51,12 +53,22 @@ public class BinBaum {
             if (runner.data > data){
                 if (runner.links == null) {
                     runner.links = newKnoten;
-                    break;
+                    toInsert = false;
                 }
                 else runner = runner.links;
             }
         }
         
+        }
+
+        public boolean search(int data, Knoten runner){
+            if (runner.data.equals(data)){
+                return true;
+            }
+            if (runner.links != null) return search(data, runner.links);
+            if (runner.rechts != null) return search(data, runner.rechts);
+            return false;
+
         }
 
     public static void main(String[] args) {
