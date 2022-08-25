@@ -10,5 +10,6 @@ public class TestBinBaum {
 
         System.out.println(bsb);
         System.out.println(bsb.tiefe());
+        System.out.println(bsb.getAnzahl());
     }
 }

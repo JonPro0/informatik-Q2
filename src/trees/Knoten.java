@@ -4,11 +4,9 @@ class Knoten {
     public Knoten links;
     public Knoten rechts;
     public int data;
-    public int anzahl;
 
     public Knoten(int data) {
         this.data = data;
-        anzahl++;
     }
 
     public Knoten(int data, Knoten links, Knoten rechts) {
@@ -71,7 +69,7 @@ class Knoten {
 
     public String ausgeben() {
         // 1. Gib die aktuelle Zahl aus
-        String output = "" + data + "  ";
+        String output = "" + data + " ";
 
         // 2. Wenn links ein Knoten ist, gib ihn aus
         if (links != null) {

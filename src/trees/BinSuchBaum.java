@@ -83,5 +83,10 @@ public class BinSuchBaum {
         return wurzel.tiefe();
     }
 
+    public int getAnzahl(){
+        String baum = wurzel.ausgeben();
+        String[] allNodes = baum.split(" ");
+        return allNodes.length;
+    }
 
 }
