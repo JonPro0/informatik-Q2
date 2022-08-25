@@ -1,7 +1,7 @@
 package trees;
 
 public class BinSuchBaum {
-    Knoten wurzel;
+    private Knoten  wurzel;
 
     public BinSuchBaum(String s) {
         einfuegen(s);
@@ -79,11 +79,9 @@ public class BinSuchBaum {
         }
     }
 
-
-
-    public static void main(String[] args) {
-        BinSuchBaum bsb = new BinSuchBaum("5 9 32 2 6 8 7 4");
-
-        System.out.println(bsb);
+    public int tiefe() {
+        return wurzel.tiefe();
     }
+
+
 }

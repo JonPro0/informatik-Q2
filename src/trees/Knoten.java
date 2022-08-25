@@ -4,15 +4,27 @@ class Knoten {
     public Knoten links;
     public Knoten rechts;
     public int data;
+    public int anzahl;
 
     public Knoten(int data) {
         this.data = data;
+        anzahl++;
     }
 
     public Knoten(int data, Knoten links, Knoten rechts) {
         this.data = data;
         this.links = links;
         this.rechts = rechts;
+    }
+
+    public int tiefe(){
+        //Bestimme tiefe vom linken Tb, oder -1 wenn nicht existiert
+        //Bestimme Tiefe vom rechten TB, oder -1 wenn nicht existiert
+        //Gib die größere Zahl + 1 zurück
+        int tLinks = (links == null) ? -1 : links.tiefe();
+        int tRechts = (rechts == null) ? -1 : rechts.tiefe();
+
+        return Math.max(tLinks, tRechts) + 1;
     }
 
     public Knoten suche(int gesucht) {
@@ -73,4 +85,7 @@ class Knoten {
 
         return output;
     }
+
+    //1. 2^t - 1 -> t = Ebenentiefe
+    //2. 2^(t-1)
 }
