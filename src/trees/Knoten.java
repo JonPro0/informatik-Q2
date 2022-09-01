@@ -15,13 +15,22 @@ class Knoten {
         this.rechts = rechts;
     }
 
-    public int tiefe(){
-        //Bestimme tiefe vom linken Tb, oder -1 wenn nicht existiert
-        //Bestimme Tiefe vom rechten TB, oder -1 wenn nicht existiert
-        //Gib die größere Zahl + 1 zurück
+    public int anzahl() {
+        int anz = 1;
+        anz += (links == null) ? 0 : links.anzahl();
+        anz += (rechts == null) ? 0 : rechts.anzahl();
+
+        return anz;
+    }
+
+    public int tiefe() {
+        // Bestimme Tiefe vom linken TB, oder -1 wenn nicht existent
         int tLinks = (links == null) ? -1 : links.tiefe();
+
+        // Bestimme Tiefe vom rechten TB, oder -1 wenn nicht existent
         int tRechts = (rechts == null) ? -1 : rechts.tiefe();
 
+        // Gib die größere Zahl + 1 zurück
         return Math.max(tLinks, tRechts) + 1;
     }
 
@@ -50,6 +59,7 @@ class Knoten {
         return null;
     }
 
+    // NLR-Ausgabe
     public String toString() {
         // 1. Gib die aktuelle Zahl aus
         String output = "" + data;
@@ -67,23 +77,24 @@ class Knoten {
         return output;
     }
 
-    public String ausgeben() {
-        // 1. Gib die aktuelle Zahl aus
-        String output = "" + data + " ";
+    // LNR-Ausgabe
+    public String toStringSortiert() {
+        String output = "";
 
-        // 2. Wenn links ein Knoten ist, gib ihn aus
+        // 1. Wenn links ein Knoten ist, gib ihn aus
         if (links != null) {
-            output =links.ausgeben() + output;
+            output += links.toStringSortiert();
         }
 
-        // 2. Wenn rechts ein Knoten ist, gib ihn aus
+        // 2. Gib die aktuelle Zahl des Knotens aus
+        output += data + " ";
+
+
+        // 3. Wenn rechts ein Knoten ist, gib ihn aus
         if (rechts != null) {
-            output += rechts.ausgeben();
+            output += rechts.toStringSortiert();
         }
 
         return output;
     }
-
-    //1. 2^t - 1 -> t = Ebenentiefe
-    //2. 2^(t-1)
 }

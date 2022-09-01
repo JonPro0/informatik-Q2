@@ -1,17 +1,19 @@
 package trees;
 
-public class BinSuchBaum {
-    private Knoten  wurzel;
+public class BinSuchBaum extends BinBaum{
+    public BinSuchBaum() {
+        wurzel = null;
+    }
 
     public BinSuchBaum(String s) {
         einfuegen(s);
     }
 
-    public void einfuegen(String s){
+    public void einfuegen(String s) {
         String[] zahlenStr = s.split(" ");
         for (String zahlStr: zahlenStr) {
-            int zahl = Integer.parseInt(zahlStr, 10);
-            einfuegenLuis(zahl);
+            int zahl = Integer.parseInt(zahlStr);
+            einfuegenLuca(zahl);
         }
     }
 
@@ -71,22 +73,19 @@ public class BinSuchBaum {
     }
 
     @Override
-    public String toString() {
-        if (wurzel == null) {
-            return "Baum leer";
-        } else {
-            return wurzel.ausgeben();
+    public Knoten suche(Integer gesucht) {
+        Knoten runner = wurzel;
+
+        while(runner!= null){
+            if (gesucht == runner.data){
+                return runner;
+            } else if(gesucht < runner.data){
+                runner = runner.links;
+            } else {
+                runner = runner.rechts;
+            }
         }
-    }
 
-    public int tiefe() {
-        return wurzel.tiefe();
+        return null;
     }
-
-    public int getAnzahl(){
-        String baum = wurzel.ausgeben();
-        String[] allNodes = baum.split(" ");
-        return allNodes.length;
-    }
-
 }
