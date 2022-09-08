@@ -21,6 +21,7 @@ public class TiereRaten extends BinBaum{
 
     private void generateTree() {
         String [] strArray =  readMyFile().split("/");
+        System.out.println(strArray[0]);
         for (String a :
                 strArray) {
             System.out.println(a);
@@ -61,7 +62,11 @@ public class TiereRaten extends BinBaum{
 
         // Schleife
         while(runner != null) {
-            System.out.println(runner.inhalt + "  ja/nein");
+            if (runner.istTier()){
+                System.out.println("Ist es ein(e) " + runner.inhalt + "  ja/nein");
+            } else {
+                System.out.println(runner.inhalt + "  ja/nein");
+            }
             String antwort = eingabe.nextLine();
             if (antwort.equalsIgnoreCase("ja") && runner.ja != null) {
                 runner = runner.ja;
@@ -80,14 +85,16 @@ public class TiereRaten extends BinBaum{
         }
 
         if(toInsert) {
-            Frage tmp = runner;
-            runner.inhalt = frageNachKategorie(tmp);
-            runner.nein = new Frage(tmp.inhalt);
+            String tmp = runner.inhalt;
+            runner.inhalt = frageNachKategorie(runner);
+            runner.nein = new Frage(tmp);
             runner.ja = new Frage(frageNachTier());
             spiele();
         }
 
     }
+
+
 
     private String frageNachTier() {
         System.out.println("An welches Tier hast du gedacht?");
@@ -132,5 +139,8 @@ class Frage {
         }
 
         return output;
+    }
+    public boolean istTier() {
+        return ja == null;
     }
 }
