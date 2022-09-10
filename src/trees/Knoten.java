@@ -97,4 +97,10 @@ class Knoten {
 
         return output;
     }
+
+    public boolean ausgeglichen() {
+        int tLinks = (links == null) ? 0 : links.tiefe();
+        int tRechts = (rechts == null) ? 0 : rechts.tiefe();
+        return (tRechts - tLinks <= 1 && tRechts - tLinks >= -1);
+    }
 }

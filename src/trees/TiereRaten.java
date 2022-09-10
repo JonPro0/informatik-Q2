@@ -21,7 +21,6 @@ public class TiereRaten extends BinBaum{
 
     private void generateTree() {
         String [] strArray =  readMyFile().split("/");
-        System.out.println(strArray[0]);
         for (String a :
                 strArray) {
             System.out.println(a);

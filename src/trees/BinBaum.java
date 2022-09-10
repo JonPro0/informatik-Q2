@@ -32,6 +32,14 @@ public class BinBaum {
         return wurzel.tiefe();
     }
 
+    public boolean ausgeglichen() {
+        if (wurzel == null) {
+            throw new NullPointerException("Baum leer");
+        } else {
+            return wurzel.ausgeglichen();
+        }
+    }
+
     public int anzahl() {
         return wurzel.anzahl();
     }
