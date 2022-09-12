@@ -36,7 +36,8 @@ public class TestBinBaum {
     public static void test4(){
         //Bemerkung: Mein Programm überprüft nur ob die Wurzel ausgeglichen ist
         // und ist deshalb nicht fertig und nicht korrekt!!!
-        BinSuchBaum bsb4 = new BinSuchBaum("10 7 17 5 9 13 19 2 12 15");
+        BinSuchBaum bsb4 = new BinSuchBaum("10 7 17 5 9 13 19 2 12 15 11");
+
         System.out.println(bsb4.ausgeglichen());
     }
     public static void main(String[] args) {
