@@ -1,25 +1,27 @@
 package tiere;
 
+import java.io.*;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class TiereRaten {
+    private static final String filename = "data/tierebaum.txt";
     Scanner eingabe = new Scanner(System.in);
     Frage wurzel;
 
     public TiereRaten() {
-        wurzel = new Frage("Ist es ein Säugetier?");
+        wurzel = new Frage("Ist es ein Saeugetier");
         wurzel.ja = new Frage("Loewe");
         wurzel.nein = new Frage("Papagei");
     }
 
     public void spiele() {
-        System.out.println("Willkommen beim Expertensystem");
+        System.out.println("Willkommen beim Expe--rtensystem");
         boolean weiter = true;
 
         while (weiter) {
             spieleRunde();
-            weiter = jaNeinFrage("Nochmal spielen?");
+            weiter = jaNeinFrage("Noch einmal spielen");
         }
     }
 
@@ -30,34 +32,32 @@ public class TiereRaten {
         // Schleife
         while (runner != null) {
             if (runner.istTier()) {
+                boolean antwortJa =
+                        jaNeinFrage("Ist es ein(e) " + runner.inhalt);
 
-
-                if (jaNeinFrage("Ist es ein(e) " + runner.inhalt + "? ")) {
-                    System.out.println("Hurrah, ich habe das Tier geraten und damit gewonnen!");
+                if (antwortJa) {
+                    System.out.println("Hurrah, ich habe das Tier geraten " + "und" + " damit gewonnen!");
                 } else {
-                    System.out.println("Oh je, ich bin am Ende meines Lateins. Welches Tier hast Du Dir gedacht? ");
+                    System.out.println("Oh je, ich bin am Ende meines " +
+                            "Lateins. Welches Tier hast Du Dir gedacht? ");
                     String neuesTierStr = eingabe.nextLine();
-                    System.out.println("Stelle eine Frage, um altes Tier und neues Tier zu unterscheiden, und für die" +
-                            " ja die Antwort für neues Tier ist. ");
+                    System.out.println("Stelle eine Frage, um " + runner.inhalt + " und " + neuesTierStr + " zu unterscheiden, und fuer die 'ja' die Antwort fuer " + neuesTierStr + " ist. ");
                     String neueFrageStr = eingabe.nextLine();
 
-                    // Vorsicht!
-                    Frage neueFrage = new Frage(neueFrageStr);
-                    pred.nein = neueFrage;
+                    runner.ja = new Frage(neuesTierStr);
+                    runner.nein = new Frage(runner.inhalt);
+                    runner.inhalt = neueFrageStr;
 
-                    // Setze neuesTier auf linke Antwort
-                    neueFrage.ja = new Frage(neuesTierStr);
-
-                    // Setze altesTier auf rechte Antwort
-                    neueFrage.nein = runner;
-                    runner = null;
+                    System.out.println("Neuer Baum: ");
+                    System.out.println(wurzel);
                 }
-            } else {
 
-                boolean tmp = jaNeinFrage(runner.inhalt);
+                runner = null;
+            } else {
+                boolean antwortJa = jaNeinFrage(runner.inhalt);
 
                 pred = runner;
-                if (tmp) {
+                if (antwortJa) {
                     runner = runner.ja;
                 } else {
                     runner = runner.nein;
@@ -67,17 +67,59 @@ public class TiereRaten {
     }
 
     private boolean jaNeinFrage(String prompt) {
-        System.out.print(prompt + " (j/n)?");
+        System.out.print(prompt + " (j/n)? ");
         return eingabe.nextLine().toLowerCase(Locale.ROOT).startsWith("j");
+    }
+
+    public String toString() {
+        if (wurzel == null) {
+            return "Baum leer";
+        } else {
+            return wurzel.toString();
+        }
     }
 
     public static void main(String[] args) {
         TiereRaten tr = new TiereRaten();
-        tr.spiele();
+        // tr.spiele();
+        // tr.speichern();
+        tr.laden();
+        System.out.println(tr.toString());
+    }
+
+    public void speichern() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(filename);
+            ObjectOutputStream objectOutputStream =
+                    new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(wurzel);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void laden() {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filename);
+            ObjectInputStream objectInputStream =
+                    new ObjectInputStream(fileInputStream);
+            wurzel = (Frage) objectInputStream.readObject();
+            objectInputStream.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
-class Frage {
+class Frage implements Serializable {
     String inhalt;
     Frage ja, nein;
 
@@ -87,5 +129,20 @@ class Frage {
 
     public boolean istTier() {
         return ja == null; // && nein == null;
+    }
+
+    @Override
+    public String toString() {
+        String output = "" + inhalt;
+
+        if (ja != null) {
+            output += "[" + ja + "]";
+        }
+
+        if (nein != null) {
+            output += "<" + nein + ">";
+        }
+
+        return output;
     }
 }

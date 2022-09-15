@@ -42,7 +42,7 @@ public class TiereRaten extends BinBaum{
             StringBuilder output = new StringBuilder();
             for (char c : array) {
                 if (c >= 32 && c <= 125) {
-                    output.append("").append(c);
+                    output.append(c);
                 }
             }
             return output.toString();
